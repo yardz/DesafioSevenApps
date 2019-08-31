@@ -16,13 +16,7 @@ interface Props {
 	movieId: number;
 }
 export const SimilarMovies: FunctionComponent<Props> = ({ movieId }) => {
-	useEffect(() => {
-		console.log('+MONTANDO: SimilarMovies', movieId);
-		return () => {
-			console.log('DESMONTANDO: SimilarMovies', movieId);
-		};
-	});
-	const [loading, error, movies, nextPage] = useRequest<{ movieId: number; image: string }, ListSimilarMovies>(
+	const [loading, error, movies, nextPage, reset] = useRequest<{ movieId: number; image: string }, ListSimilarMovies>(
 		getSimilarMovies,
 		{ id: movieId, paginate: true },
 		list => list.results.map(item => ({ movieId: item.id, image: item.poster_path })),
@@ -30,11 +24,19 @@ export const SimilarMovies: FunctionComponent<Props> = ({ movieId }) => {
 
 	const cards = useMemo(() => movies.map((movie, key) => <MovieCard key={key} {...movie} />), [movies]);
 
+	//reset slider
+	useEffect(() => {
+		if (movies.length !== 0) {
+			reset(movieId);
+		}
+	}, [movieId]);
+
+	//load first data
 	useEffect(() => {
 		if (movies.length === 0) {
 			nextPage();
 		}
-	}, [movieId]);
+	}, [movies]);
 
 	if (movies.length === 0) {
 		return <></>;

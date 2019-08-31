@@ -32,7 +32,7 @@ type ReducerRequest<S> = (state: StateRequestReducer<S>, action: ActionRequestRe
 const reducerRequest: ReducerRequest<any> = (state, action) => {
 	switch (action.type) {
 		case 'reset':
-			return { ...state, ...action.payload, loading: false, error: undefined, page: 1, data: [] };
+			return { loading: false, error: undefined, data: [], id: action.payload.id, page: state.page ? 1 : undefined };
 		case 'next':
 			const nextPage = state.page !== undefined ? state.page + 1 : undefined;
 			return { ...state, loading: true, error: undefined, page: nextPage };
@@ -51,7 +51,7 @@ export const useRequest = <T, PromiseResponse>(
 	request: (id: number, page?: number) => Promise<PromiseResponse>,
 	props: { id: number; paginate?: boolean },
 	filter: (response: PromiseResponse) => T[],
-): [boolean, any, T[], () => void] => {
+): [boolean, any, T[], () => void, (id: number) => void] => {
 	const initialState: StateRequestReducer<T> = {
 		loading: false,
 		error: undefined,
@@ -68,11 +68,12 @@ export const useRequest = <T, PromiseResponse>(
 					dispatch({ type: 'success', payload: filter(response) });
 				})
 				.catch(error => {
-					console.log({ error });
 					dispatch({ type: 'fail', payload: error });
 				});
 		}
 	};
-
-	return [state.loading, state.error, state.data, nextPage];
+	const reset = (id: number) => {
+		dispatch({ type: 'reset', payload: { id } });
+	};
+	return [state.loading, state.error, state.data, nextPage, reset];
 };
