@@ -16,13 +16,6 @@ interface Props {
 	movieId: number;
 }
 export const FeaturedMovie: FunctionComponent<Props> = ({ movieId }) => {
-	// useEffect(() => {
-	// 	console.log('+MONTANDO: FeaturedMovie');
-	// 	return () => {
-	// 		console.log('DESMONTANDO: FeaturedMovie');
-	// 	};
-	// }, []);
-
 	const { navigate } = useContext(NavigationContext);
 	const theme = useContext(ThemeContext);
 	const [movie, setMovie] = useState<Movie>(undefined);

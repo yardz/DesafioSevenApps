@@ -9,13 +9,7 @@ interface Props {
 	image: string;
 }
 export const MovieCard: FunctionComponent<Props> = ({ movieId, image }) => {
-	// useEffect(() => {
-	// 	console.log('+MONTANDO: MovieCard', movieId);
-	// 	return () => {
-	// 		console.log('DESMONTANDO: MovieCard');
-	// 	};
-	// }, []);
-	const { navigate, setParams } = useContext(NavigationContext);
+	const { navigate } = useContext(NavigationContext);
 	return (
 		<TouchableHighlight
 			onPress={() => {

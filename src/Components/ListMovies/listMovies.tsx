@@ -17,13 +17,6 @@ interface Props {
 	title: string;
 }
 export const ListMovies: FunctionComponent<Props> = ({ listId, title }) => {
-	// useEffect(() => {
-	// 	console.log('+MONTANDO: ListMovies', listId);
-	// 	return () => {
-	// 		console.log('DESMONTANDO: ListMovies', listId);
-	// 	};
-	// });
-
 	const [movies, setMovies] = useState<{ movieId: number; image: string }[]>([]);
 	const [limit, setLimit] = useState(5);
 
