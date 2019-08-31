@@ -25,6 +25,8 @@
     ],
     "ios": {
       "supportsTablet": true
-    }
+    },
+    "description": "Desafio Seven Apps",
+    "githubUrl": "https://github.com/yardz/DesafioSevenApps"
   }
 }

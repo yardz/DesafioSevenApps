@@ -1,19 +1,15 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { FunctionComponent, useMemo } from 'react';
+import { ThemeProvider } from 'styled-components';
+import AppContainer from './src/';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app! (update)</Text>
-    </View>
-  );
-}
+import { getActiveTheme } from './App.style';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+const App: FunctionComponent = () => {
+	const theme = useMemo(() => getActiveTheme(), []);
+	return (
+		<ThemeProvider theme={theme}>
+			<AppContainer />
+		</ThemeProvider>
+	);
+};
+export default App;
